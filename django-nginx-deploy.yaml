@@ -1,0 +1,40 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      volumes:
+        - name: django-data-pv
+          persistentVolumeClaim:
+           claimName: django-data-pv-claim
+      containers:
+        - name: django
+          image: 192.168.189.136/todo-list-django
+          imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: "/src"
+              name: django-data-pv
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DATABASE_HOST
+              value: "db"
+            - name: FRONTEND_IP
+              value: "minikube:32003"
+            - name: PGADMIN_IP
+              value: "minikube:32001"
+        - name: nginx
+          # image: curtis911/todo-list-nginx
+          image: 192.168.189.136/todo-list-nginx
+          imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: "/src"
+              name: django-data-pv
+          ports:
+            - containerPort: 8888

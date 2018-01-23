@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: web
+spec:
+  selector:
+    app: web
+  type: NodePort
+  # type: LoadBalancer
+  ports:
+  - protocol: TCP
+    nodePort: 32002
+    port: 8888
+    targetPort: 8888

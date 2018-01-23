@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: frontend
+spec:
+  selector:
+    app: frontend
+  type: NodePort
+  # type: LoadBalancer
+  ports:
+  - protocol: TCP
+    nodePort: 32003
+    port: 8080
+    targetPort: 8080

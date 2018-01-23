@@ -1,0 +1,20 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          # image: curtis911/todo-list-frontend
+          image: 192.168.189.136/todo-list-frontend
+          imagePullPolicy: Always
+          env:
+            - name: TODO_BACKEND_URL
+              # ex: http://192.168.39.121:32467/api/todo-list/
+              value: "http://minikube:32002/api/todo-list/"

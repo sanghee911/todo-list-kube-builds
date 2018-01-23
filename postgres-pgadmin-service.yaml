@@ -1,0 +1,19 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: db
+spec:
+  selector:
+    app: db
+  # type: LoadBalancer
+  type: NodePort
+  ports:
+    - name: postgres
+      protocol: TCP
+      port: 5432
+      targetPort: 5432
+    - name: pgadmin
+      protocol: TCP
+      nodePort: 32001
+      port: 8001
+      targetPort: 80
